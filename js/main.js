@@ -19,6 +19,8 @@ function displayStatus(msg){
 	document.getElementById("status").innerHTML=msg;
 }
 
+displayStatus("X kicks things off...")
+
 //On each click of a square, a value is assigned that will help calculate a win
 function assignSquareValue(){
 	if(turn==1){
@@ -36,7 +38,7 @@ function rowSum(x,y,z){
 		turn=2;
 		gameOver=1;
 		increasePlayerOneScore();
-		displayStatus("X wins!");
+		displayStatus("Yay X!");
 	}else if(x+y+z==12){
 		$(".square").addClass("taken");
 		$(".reset").css("display","inline-block");
@@ -73,7 +75,7 @@ function boardSum(){
 			displayStatus("It's a tie!")
 		}
 		$(".square").addClass("taken");
-		$(".reset").show();
+		$(".reset").css("display","inline-block");
 		if(turn==1){
 			turn==2;
 		}else{
@@ -190,19 +192,20 @@ $("#sq9").on("click",function(){
 });
 
 $(".square").on("click",function(){
-	if($(this).hasClass("taken")){
-	}else if(turn==1){
+	if(!$(this).hasClass("taken")){
+		if(turn==1){
 		$(this).addClass("playerOnesTurn");
 		$(this).addClass("taken");
 		turn=2;
 		displayStatus("O is On");
 		checkForWin();
-	}else{
-		$(this).addClass("playerTwosTurn");
-		$(this).addClass("taken");
-		turn=1;
-		displayStatus("X, mark the spot");
-		checkForWin();
+		}else{
+			$(this).addClass("playerTwosTurn");
+			$(this).addClass("taken");
+			turn=1;
+			displayStatus("X, mark the spot");
+			checkForWin();
+		}
 	};
 	totalTurns++;
 });
@@ -221,7 +224,7 @@ $(".reset").on("click",function(){
 	sq9=0;
 	console.log("reset");
 	$(this).hide();
-	gamerOver=0;
+	gameOver=0;
 	totalTurns=0;
 	if(turn==1){
 		displayStatus("X, mark the spot!");
